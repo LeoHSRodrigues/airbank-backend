@@ -27,6 +27,18 @@ export class TransactionRepository {
             })
         }
 
+        if (fields.accountId) {
+            where.AND.push(
+                { accountId: options.accountId },
+            )
+        }
+
+        if (fields.bankName) {
+            where.AND.push(
+                { account: { bank: { contains: options.bankName, mode: 'insensitive' } } },
+            )
+        }
+
         if (options.search) {
             const rawSearch = [
                 { reference: { contains: options.search, mode: 'insensitive' } },

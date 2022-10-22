@@ -15,8 +15,8 @@ type Query {
     initialDate: Date
     endingDate: Date
     search: String
+    accountId: String
     bankName: String
-    categoryName: String
     limit: Int
     offset: Int
   ): [Transactions]
