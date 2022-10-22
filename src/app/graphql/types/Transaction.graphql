@@ -1,0 +1,24 @@
+type Transactions {
+  id: String
+  accountId: String
+  categoryId: String
+  reference: String
+  amount: String
+  currency: String
+  date: Date
+  account: Account
+  category: Category
+}
+
+type Query {
+  allTransactions(
+    initialDate: Date
+    endingDate: Date
+    search: String
+    bankName: String
+    categoryName: String
+    limit: Int
+    offset: Int
+  ): [Transactions]
+  transaction(id: String): Transactions
+}

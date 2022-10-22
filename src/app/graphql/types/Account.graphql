@@ -1,0 +1,10 @@
+type Account {
+  id: String
+  name: String
+  bank: String
+}
+
+type Query {
+  allAccounts(limit: Int, offset: Int): [Account]
+  account(id: String): Account
+}

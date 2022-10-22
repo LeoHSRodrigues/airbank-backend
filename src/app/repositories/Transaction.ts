@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client';
-import { ITransactionSearchOptions } from '../interfaces/Transactions';
+import { ITransaction, ITransactionSearchOptions } from '@/app/interfaces/Transactions';
 export class TransactionRepository {
     private prismaClient: PrismaClient
 
@@ -42,7 +42,7 @@ export class TransactionRepository {
         return where
     }
 
-    public async find(options: ITransactionSearchOptions) {
+    public async find(options: ITransactionSearchOptions): Promise<ITransaction[] | []> {
         let where: {
             AND: any[];
             OR: any[];
@@ -71,13 +71,17 @@ export class TransactionRepository {
         return data
     }
 
-    public async findOne(identifier) {
+    public async findOne(identifier): Promise<ITransaction> {
         const where = identifier
         if (!identifier) {
             throw new Error('identifier is required for this method')
         }
-        return this.prismaClient.transaction.findUniqueOrThrow({
-            where
+        return this.prismaClient.transaction.findUnique({
+            where,
+            include: {
+                account: true,
+                category: true
+            }
         });
     }
 

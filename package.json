@@ -12,6 +12,8 @@
     "test:watch": "NODE_ENV=test jest --watch"
   },
   "dependencies": {
+    "@graphql-tools/load-files": "^6.6.1",
+    "@graphql-tools/schema": "^9.0.4",
     "@prisma/client": "^4.5.0",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",

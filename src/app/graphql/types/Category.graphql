@@ -1,0 +1,10 @@
+type Category {
+  id: String!
+  name: String
+  color: String
+}
+
+type Query {
+  allCategories(limit: Int, offset: Int): [Category]
+  category(id: String): Category
+}
