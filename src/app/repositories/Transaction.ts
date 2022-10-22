@@ -58,7 +58,7 @@ export class TransactionRepository {
             delete where.OR
         }
 
-        const data = await this.prismaClient.transaction.findMany({
+        return await this.prismaClient.transaction.findMany({
             where,
             skip: options.offset || 0,
             take: options.limit || 10,
@@ -67,8 +67,6 @@ export class TransactionRepository {
                 category: true
             }
         });
-
-        return data
     }
 
     public async findOne(identifier): Promise<ITransaction> {

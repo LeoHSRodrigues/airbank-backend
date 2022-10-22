@@ -31,13 +31,11 @@ export class CategoryRepository {
             delete where.OR
         }
 
-        const data = await this.prismaClient.category.findMany({
+        return await this.prismaClient.category.findMany({
             where,
             skip: options.offset || 0,
             take: options.limit || 10,
         });
-
-        return data
     }
 
     public async findOne(identifier): Promise<Category> {

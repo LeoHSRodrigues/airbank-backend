@@ -31,18 +31,16 @@ export class AccountRepository {
             delete where.OR
         }
 
-        const data = await this.prismaClient.account.findMany({
+        return await this.prismaClient.account.findMany({
             where,
             skip: options.offset || 0,
             take: options.limit || 10,
         });
-
-        return data
     }
 
     public async findOne(identifier): Promise<Account> {
         const where = identifier
-        
+
         if (!identifier) {
             throw new Error('identifier is required for this method')
         }
