@@ -8,3 +8,7 @@ type Query {
   allCategories(limit: Int, offset: Int): [Category]
   category(id: String): Category
 }
+
+type Mutation {
+  newCategory(name: String!, color: String!): Category
+}

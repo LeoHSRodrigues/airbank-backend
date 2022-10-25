@@ -39,17 +39,20 @@ export class CategoryRepository {
     }
 
     public async findOne(identifier): Promise<Category> {
-        const where = identifier
+        
         if (!identifier) {
             throw new Error('identifier is required for this method')
         }
-        return this.prismaClient.category.findUnique({
-            where
+
+        return this.prismaClient.category.findFirst({
+            where: identifier
         });
     }
 
-    public async save() {
-        return this.prismaClient.category.findMany();
+    public async save(data) {
+        return this.prismaClient.category.create({
+            data
+        });
     }
 
     public getClient() {

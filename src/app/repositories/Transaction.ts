@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client';
-import { ITransaction, ITransactionSearchOptions } from '@/app/interfaces/Transactions';
+import { ITransaction, ITransactionSearchOptions, ITransactionUpdateCategory } from '@/app/interfaces/Transactions';
 export class TransactionRepository {
     private prismaClient: PrismaClient
 
@@ -83,9 +83,11 @@ export class TransactionRepository {
 
     public async findOne(identifier): Promise<ITransaction> {
         const where = identifier
+
         if (!identifier) {
             throw new Error('identifier is required for this method')
         }
+
         return this.prismaClient.transaction.findUnique({
             where,
             include: {
@@ -95,8 +97,18 @@ export class TransactionRepository {
         });
     }
 
-    public async save() {
-        return this.prismaClient.transaction.findMany();
+    public async updateTransactionCategory(fields: ITransactionUpdateCategory) {
+        return this.prismaClient.transaction.update({
+            data: {
+                categoryId: fields.categoryId
+            },
+            where: {
+                id: fields.transactionId
+            },
+            include: {
+                account: true
+            }
+        });
     }
 
     public getClient() {

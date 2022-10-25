@@ -21,3 +21,8 @@ export interface ITransactionSearchOptions {
     limit: number;
     offset: number;
 }
+
+export interface ITransactionUpdateCategory {
+    transactionId: string
+    categoryId: string
+}

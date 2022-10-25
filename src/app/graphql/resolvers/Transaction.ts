@@ -5,6 +5,9 @@ const transactionRepository = new TransactionRepository()
 export default {
   Query: {
     allTransactions: (_parent, args) => transactionRepository.find(args),
-    transaction: (_parent, args) => transactionRepository.findOne(args.identifier),
+    transaction: (_parent, args) => transactionRepository.findOne(args),
   },
+  Mutation: {
+    updateTransactionCategory: (_parent, args) => transactionRepository.updateTransactionCategory(args),
+  }
 }

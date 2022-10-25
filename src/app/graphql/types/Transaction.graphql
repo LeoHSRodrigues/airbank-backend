@@ -22,3 +22,7 @@ type Query {
   ): [Transactions]
   transaction(id: String): Transactions
 }
+
+type Mutation {
+  updateTransactionCategory(transactionId: String!, categoryId: String!): Transactions
+}
