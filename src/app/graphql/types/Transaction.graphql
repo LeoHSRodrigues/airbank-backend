@@ -19,6 +19,7 @@ type Query {
     bankName: String
     limit: Int
     offset: Int
+    order: String
   ): [Transactions]
   transaction(id: String): Transactions
 }

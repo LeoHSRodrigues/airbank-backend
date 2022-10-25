@@ -1,25 +1,31 @@
 import { Category, Account } from "@prisma/client";
 
+export enum EOrderDateOptions {
+    ASC = 'asc',
+    DESC = 'desc'
+}
+
 export interface ITransaction {
-    id: String;
+    id: string;
     account: Account;
-    accountId: String;
+    accountId: string;
     category: Category;
-    categoryId: String;
-    reference: String;
-    amount: String;
-    currency: String;
+    categoryId: string;
+    reference: string;
+    amount: string;
+    currency: string;
     date: Date;
 }
 
 export interface ITransactionSearchOptions {
     initialDate: Date;
     endingDate: Date;
-    search: String;
-    accountId: String;
-    bankName: String;
+    search: string;
+    accountId: string;
+    bankName: string;
     limit: number;
     offset: number;
+    order: EOrderDateOptions;
 }
 
 export interface ITransactionUpdateCategory {

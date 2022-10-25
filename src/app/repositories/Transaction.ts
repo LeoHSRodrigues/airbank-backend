@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client';
-import { ITransaction, ITransactionSearchOptions, ITransactionUpdateCategory } from '@/app/interfaces/Transactions';
+import { EOrderDateOptions, ITransaction, ITransactionSearchOptions, ITransactionUpdateCategory } from '@/app/interfaces/Transactions';
 export class TransactionRepository {
     private prismaClient: PrismaClient
 
@@ -54,7 +54,7 @@ export class TransactionRepository {
         return where
     }
 
-    public async find(options: ITransactionSearchOptions): Promise<ITransaction[] | []> {
+    public async find(options: ITransactionSearchOptions, order: EOrderDateOptions): Promise<ITransaction[] | []> {
         let where: {
             AND: any[];
             OR: any[];
@@ -74,6 +74,9 @@ export class TransactionRepository {
             where,
             skip: options.offset || 0,
             take: options.limit || 10,
+            orderBy: {
+                date: order || 'desc'
+            },
             include: {
                 account: true,
                 category: true
