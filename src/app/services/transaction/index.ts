@@ -1,4 +1,4 @@
-import { ITransactionSearchOptions } from "@/app/interfaces/Transactions";
+import { ITransactionSearchOptions, ITransactionUpdateCategory } from "@/app/interfaces/Transactions";
 import { TransactionRepository } from "@/app/repositories/Transaction";
 
 export class TransactionService {
@@ -21,6 +21,13 @@ export class TransactionService {
         const order = data.order
 
         return await this.transactionRepository.find(search, order)
+    }
 
+    public async findOne(identifier) {
+        return await this.transactionRepository.findOne(identifier)
+    }
+
+    public async updateCategory(args: ITransactionUpdateCategory) {
+        return await this.transactionRepository.updateTransactionCategory(args)
     }
 }

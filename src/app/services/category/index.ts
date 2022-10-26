@@ -1,4 +1,4 @@
-import { INewCategory } from "@/app/interfaces/Categories";
+import { ICategorySearchOptions, INewCategory } from "@/app/interfaces/Categories";
 import { CategoryRepository } from "@/app/repositories/Category";
 
 export class CategoryService {
@@ -29,5 +29,15 @@ export class CategoryService {
         }
 
         return await this.categoryRepository.save(formattedCategory)
+    }
+
+    public async find(args: ICategorySearchOptions) {
+
+        return await this.categoryRepository.find(args)
+    }
+
+    public async findOne(args) {
+
+        return await this.categoryRepository.findOne(args)
     }
 }
