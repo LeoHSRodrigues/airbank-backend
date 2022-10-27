@@ -1,10 +1,10 @@
-import { CategoryService } from '@/app/services/category';
+import { AccountService } from '@/app/services/account';
 
-const categoryService = new CategoryService()
+const accountService = new AccountService()
 
 export default {
   Query: {
-    allAccounts: (_parent, args) => categoryService.find(args),
-    account: (_parent, args) => categoryService.findOne(args)
+    allAccounts: (_parent, args) => accountService.find(args),
+    account: (_parent, args) => accountService.findOne(args)
   }
 }

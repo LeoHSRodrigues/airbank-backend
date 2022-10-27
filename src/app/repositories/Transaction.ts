@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client';
-import { EOrderDateOptions, ITransaction, ITransactionSearchOptions, ITransactionUpdateCategory } from '@/app/interfaces/Transactions';
+import { EOrderDateOptions, ITransaction, ITransactionSearchOptions, ITransactionUpdateCategory, ITransactionWithCounter } from '@/app/interfaces/Transactions';
 export class TransactionRepository {
     private prismaClient: PrismaClient
 
@@ -54,7 +54,7 @@ export class TransactionRepository {
         return where
     }
 
-    public async find(options: ITransactionSearchOptions, order: EOrderDateOptions): Promise<ITransaction[] | []> {
+    public async find(options: ITransactionSearchOptions, order: EOrderDateOptions): Promise<ITransactionWithCounter> {
         let where: {
             AND: any[];
             OR: any[];
@@ -70,18 +70,25 @@ export class TransactionRepository {
             delete where.OR
         }
 
-        return await this.prismaClient.transaction.findMany({
+        const count = await this.prismaClient.transaction.count({
+            where,
+        })
+
+        const data = await this.prismaClient.transaction.findMany({
             where,
             skip: options.offset || 0,
             take: options.limit || 10,
             orderBy: {
-                date: order || 'desc'
+                date: order || EOrderDateOptions.DESC
             },
             include: {
                 account: true,
                 category: true
-            }
+            },
+
         });
+
+        return { count, data }
     }
 
     public async findOne(identifier): Promise<ITransaction> {

@@ -10,6 +10,11 @@ type Transactions {
   category: Category
 }
 
+type AllTransactions {
+  count: Int
+  data: [Transactions]
+}
+
 type Query {
   allTransactions(
     initialDate: Date
@@ -20,7 +25,7 @@ type Query {
     limit: Int
     offset: Int
     order: String
-  ): [Transactions]
+  ): AllTransactions
   transaction(id: String): Transactions
 }
 

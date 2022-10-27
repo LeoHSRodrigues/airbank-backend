@@ -8,7 +8,7 @@ export class AccountService {
         this.accountRepository = new AccountRepository()
     }
 
-    public async findAll(options: IAccountSearchOptions) {
+    public async find(options: IAccountSearchOptions) {
 
         return await this.accountRepository.find(options)
     }

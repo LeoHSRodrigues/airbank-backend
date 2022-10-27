@@ -8,20 +8,11 @@ export class CategoryRepository {
         this.prismaClient = new PrismaClient()
     }
 
-    private queryGenerator(options: ICategorySearchOptions) {
-        const where = { AND: [], OR: [] }
-        const fields = { ...options }
-
-        return where
-    }
-
     public async find(options: ICategorySearchOptions): Promise<Category[] | []> {
         let where: {
             AND: any[];
             OR: any[];
         }
-
-        where = this.queryGenerator(options)
 
         if (!where.AND.length) {
             delete where.AND

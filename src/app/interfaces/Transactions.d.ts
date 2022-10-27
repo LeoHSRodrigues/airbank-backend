@@ -1,6 +1,6 @@
 import { Category, Account } from "@prisma/client";
 
-export enum EOrderDateOptions {
+export const enum EOrderDateOptions {
     ASC = 'asc',
     DESC = 'desc'
 }
@@ -18,17 +18,22 @@ export interface ITransaction {
 }
 
 export interface ITransactionSearchOptions {
-    initialDate: Date;
-    endingDate: Date;
-    search: string;
-    accountId: string;
-    bankName: string;
-    limit: number;
-    offset: number;
-    order: EOrderDateOptions;
+    initialDate?: Date;
+    endingDate?: Date;
+    search?: string;
+    accountId?: string;
+    bankName?: string;
+    limit?: number;
+    offset?: number;
+    order?: EOrderDateOptions;
 }
 
 export interface ITransactionUpdateCategory {
     transactionId: string
     categoryId: string
+}
+
+export interface ITransactionWithCounter {
+    data: ITransaction[] | [];
+    count: number;
 }

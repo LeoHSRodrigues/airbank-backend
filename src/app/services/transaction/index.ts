@@ -1,4 +1,4 @@
-import { ITransactionSearchOptions, ITransactionUpdateCategory } from "@/app/interfaces/Transactions";
+import { EOrderDateOptions, ITransactionSearchOptions, ITransactionUpdateCategory } from "@/app/interfaces/Transactions.d";
 import { TransactionRepository } from "@/app/repositories/Transaction";
 
 export class TransactionService {
@@ -8,13 +8,13 @@ export class TransactionService {
         this.transactionRepository = new TransactionRepository()
     }
 
-    public async findAll(data: ITransactionSearchOptions) {
+    public async find(data: ITransactionSearchOptions) {
 
         const search = {
             ...data
         }
 
-        if (data.order && (data.order !== 'asc' && data.order !== 'desc')) {
+        if (data.order && (data.order !== EOrderDateOptions.ASC && data.order !== EOrderDateOptions.DESC)) {
             throw new Error('Invalid order value')
         }
 

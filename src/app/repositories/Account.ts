@@ -8,20 +8,11 @@ export class AccountRepository {
         this.prismaClient = new PrismaClient()
     }
 
-    private queryGenerator(options: IAccountSearchOptions) {
-        const where = { AND: [], OR: [] }
-        const fields = { ...options }
-
-        return where
-    }
-
     public async find(options: IAccountSearchOptions): Promise<Account[] | []> {
         let where: {
             AND: any[];
             OR: any[];
         }
-
-        where = this.queryGenerator(options)
 
         if (!where.AND.length) {
             delete where.AND
@@ -48,10 +39,6 @@ export class AccountRepository {
         return this.prismaClient.account.findUnique({
             where
         });
-    }
-
-    public async save() {
-        return this.prismaClient.transaction.findMany();
     }
 
     public getClient() {
