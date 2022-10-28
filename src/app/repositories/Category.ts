@@ -10,21 +10,7 @@ export class CategoryRepository {
     }
 
     public async find(options: ICategorySearchOptions): Promise<Category[] | []> {
-        let where: {
-            AND: any[];
-            OR: any[];
-        }
-
-        if (!where.AND.length) {
-            delete where.AND
-        }
-
-        if (!where.OR.length) {
-            delete where.OR
-        }
-
         return await this.prismaClient.category.findMany({
-            where,
             skip: options.offset || 0,
             take: options.limit || 10,
         });
