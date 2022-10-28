@@ -1,3 +1,4 @@
+import Prisma from './prismaClient';
 import { PrismaClient, Category } from '@prisma/client';
 import { ICategorySearchOptions } from '@/app/interfaces/Categories';
 
@@ -5,7 +6,7 @@ export class CategoryRepository {
     private prismaClient: PrismaClient
 
     constructor() {
-        this.prismaClient = new PrismaClient()
+        this.prismaClient = Prisma
     }
 
     public async find(options: ICategorySearchOptions): Promise<Category[] | []> {

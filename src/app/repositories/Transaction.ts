@@ -1,10 +1,11 @@
 import { PrismaClient } from '@prisma/client';
+import Prisma from './prismaClient';
 import { EOrderDateOptions, ITransaction, ITransactionSearchOptions, ITransactionUpdateCategory, ITransactionWithCounter } from '@/app/interfaces/Transactions';
 export class TransactionRepository {
     private prismaClient: PrismaClient
 
     constructor() {
-        this.prismaClient = new PrismaClient()
+        this.prismaClient = Prisma
     }
 
     private queryGenerator(options: ITransactionSearchOptions) {
@@ -55,6 +56,7 @@ export class TransactionRepository {
     }
 
     public async find(options: ITransactionSearchOptions, order: EOrderDateOptions): Promise<ITransactionWithCounter> {
+        await this.prismaClient.$connect()
         let where: {
             AND: any[];
             OR: any[];

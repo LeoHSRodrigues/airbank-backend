@@ -1,29 +1,16 @@
-import { PrismaClient, Account } from '@prisma/client';
+import Prisma from './prismaClient';
+import { Account, PrismaClient } from '@prisma/client';
 import { IAccountSearchOptions } from '@/app/interfaces/Accounts';
 
 export class AccountRepository {
     private prismaClient: PrismaClient
 
     constructor() {
-        this.prismaClient = new PrismaClient()
+        this.prismaClient = Prisma
     }
 
     public async find(options: IAccountSearchOptions): Promise<Account[] | []> {
-        let where: {
-            AND: any[];
-            OR: any[];
-        }
-
-        if (!where.AND.length) {
-            delete where.AND
-        }
-
-        if (!where.OR.length) {
-            delete where.OR
-        }
-
         return await this.prismaClient.account.findMany({
-            where,
             skip: options.offset || 0,
             take: options.limit || 10,
         });
