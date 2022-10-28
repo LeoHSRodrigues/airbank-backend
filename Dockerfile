@@ -6,9 +6,15 @@ COPY package*.json ./
 
 RUN npm install --legacy-peer-deps
 
-RUN npm run build
+ARG PORT
+ENV PORT ${PORT}
+
+ARG DATABASE_URL
+ENV DATABASE_URL ${DATABASE_URL}
 
 COPY . .
+
+RUN npm run build
 
 EXPOSE 3000
 CMD [ "npm", "start" ]
