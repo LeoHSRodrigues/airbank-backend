@@ -6,9 +6,11 @@
   "author": "Leonardo Henrique",
   "license": "MIT",
   "scripts": {
-    "dev": "ts-node-dev --inspect=0.0.0.0:9229 -r tsconfig-paths/register src/index.ts",
     "build": "sh ./build.sh",
+    "dev": "ts-node-dev --inspect=0.0.0.0:9229 -r tsconfig-paths/register src/index.ts",
+    "migrate": "yarn prisma migrate dev",
     "start": "node dist/src/index.js",
+    "seed": "node prisma/seed.js",
     "test": "NODE_ENV=test jest",
     "test:watch": "NODE_ENV=test jest --watch"
   },

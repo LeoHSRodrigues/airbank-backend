@@ -1,28 +1,37 @@
-import { PrismaClient, Prisma } from '@prisma/client'
-import * as csv from '@fast-csv/parse';
-import * as fs from 'fs';
-import * as path from 'path';
+const { PrismaClient } = require('@prisma/client')
+const csv = require('@fast-csv/parse')
+const fs = require('fs')
+const path = require('path');
 
 const prisma = new PrismaClient()
 let totalTransactionsCreated = 0;
+
 async function createCategory(category) {
-    await prisma.category.upsert({
-        create: category,
-        update: category,
-        where: {
-            id: category.id
-        }
-    })
+    try {
+        await prisma.category.upsert({
+            create: category,
+            update: {},
+            where: {
+                id: category.id
+            }
+        })
+    } catch (error) {
+        console.log(error)
+    }
 }
 
 async function createAccounts(account) {
-    await prisma.account.upsert({
-        create: account,
-        update: account,
-        where: {
-            id: account.id
-        }
-    })
+    try {
+        await prisma.account.upsert({
+            create: account,
+            update: {},
+            where: {
+                id: account.id
+            }
+        })
+    } catch (error) {
+        console.log(error)
+    }
 }
 
 async function createTransactions(transaction) {
@@ -31,10 +40,10 @@ async function createTransactions(transaction) {
             ...transaction,
             date: transaction.date ? new Date(transaction.date) : null,
         }
-    
+
         await prisma.transaction.upsert({
             create: formattedTransaction,
-            update: formattedTransaction,
+            update: {},
             where: {
                 id: transaction.id
             }
@@ -52,11 +61,10 @@ async function seedCategories() {
         fs.createReadStream(path.resolve('prisma', 'categories.csv'))
             .pipe(csv.parse({ headers: true }))
             .on('error', error => {
-                console.error(error)
-                reject()
+                reject(error)
             })
             .on('data', async row => await createCategory(row))
-            .on('end', (rowCount: number) => {
+            .on('end', (rowCount) => {
                 console.log(`Finished creating categories, total of ${rowCount} categories created`)
                 resolve(true)
             });
@@ -70,11 +78,10 @@ async function seedAccounts() {
         fs.createReadStream(path.resolve('prisma', 'accounts.csv'))
             .pipe(csv.parse({ headers: true }))
             .on('error', error => {
-                console.error(error)
-                reject()
+                reject(error)
             })
             .on('data', async row => await createAccounts(row))
-            .on('end', (rowCount: number) => {
+            .on('end', (rowCount) => {
                 console.log(`Finished creating accounts, total of ${rowCount} accounts created`)
                 resolve(true)
             });
@@ -88,11 +95,10 @@ async function seedTransactions() {
         fs.createReadStream(path.resolve('prisma', 'transactions.csv'))
             .pipe(csv.parse({ headers: true }))
             .on('error', error => {
-                console.error('aaaaa', error)
-                reject()
+                reject(error)
             })
             .on('data', async row => await createTransactions(row))
-            .on('end', (rowCount: number) => {
+            .on('end', (rowCount) => {
                 console.log(`Finished creating transactions, total of ${totalTransactionsCreated} transactions created of ${rowCount}`)
                 resolve(true)
             }

@@ -42,12 +42,12 @@ export class TransactionRepository {
 
         if (options.search) {
             const rawSearch = [
-                { reference: { contains: options.search, mode: 'insensitive' } },
-                { amount: { contains: options.search } },
-                { currency: { contains: options.search } },
-                { category: { name: { contains: options.search, mode: 'insensitive' } } },
-                { account: { bank: { contains: options.search, mode: 'insensitive' } } },
-                { account: { name: { contains: options.search, mode: 'insensitive' } } },
+                { reference: { search: options.search, mode: 'insensitive' } },
+                { amount: { search: options.search } },
+                { currency: { search: options.search } },
+                { category: { name: { search: options.search, mode: 'insensitive' } } },
+                { account: { bank: { search: options.search, mode: 'insensitive' } } },
+                { account: { name: { search: options.search, mode: 'insensitive' } } },
             ]
             where.OR = rawSearch
         }

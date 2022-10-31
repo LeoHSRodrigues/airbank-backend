@@ -10,9 +10,14 @@ export class CategoryService {
 
     public async save(data: INewCategory) {
         const regexValidColor = /^#(?:[0-9a-fA-F]{3}){1,2}$/
+        const regexValidName = /^[\-@&()$#*|\\//A-Za-z0-9\u00C0-\u017F ]+$/
 
         if (!regexValidColor.test(data.color)) {
             throw new Error('Invalid color')
+        }
+
+        if (!regexValidName.test(data.name)) {
+            throw new Error('Invalid name')
         }
 
         const category = await this.categoryRepository.findOne({

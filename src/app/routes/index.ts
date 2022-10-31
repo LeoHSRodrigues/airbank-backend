@@ -3,10 +3,11 @@ import { Router } from 'express';
 import { schema } from '@/app/graphql';
 
 const routes = Router();
+const isDev = process.env.NODE_ENV !== 'production'
 
 routes.use('/v1/graphql', graphqlHTTP({
     schema,
-    graphiql: true,
+    graphiql: isDev,
 }));
 
 routes.get('/v1/healthcheck', (req, res) => {
